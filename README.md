@@ -37,13 +37,6 @@
    PLUGIN_MAIN_CLASS=YourMainClass
    ```
 
-2. **設定例**
-   ```env
-   PLUGIN_NAME=DeathMode
-   PLUGIN_AUTHOR=com.vreba
-   PLUGIN_VERSION=2.0-SNAPSHOT
-   PLUGIN_MAIN_CLASS=DeathModePlugin
-   ```
 
 ### ディレクトリ構成
 
