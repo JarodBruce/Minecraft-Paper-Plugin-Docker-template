@@ -1,0 +1,34 @@
+# docker-compose.yml (修正版)
+services:
+  paper-dev-server:
+    build:
+      context: .
+      args:
+        PLUGIN_NAME: ${PLUGIN_NAME:-MyPlugin}
+        PLUGIN_AUTHOR: ${PLUGIN_AUTHOR:-com.example}
+        PLUGIN_VERSION: ${PLUGIN_VERSION:-1.0-SNAPSHOT}
+        PLUGIN_MAIN_CLASS: ${PLUGIN_MAIN_CLASS:-MyPlugin}
+    container_name: paper-dev-server-1.16.5
+    restart: unless-stopped
+    ports:
+      - "25565:25565" # Minecraft game port
+      - "5005:5005"   # Java remote debug port
+    
+    # データを永続化し、ソースコードを共有するための設定
+    volumes:
+      # プラグインのソースコードをマウント
+      - ./plugin-src:/app/plugin-src
+
+      # サーバーデータの中から、保存したいフォルダだけを個別に指定します
+      # これにより、コンテナ内のpaper.jarやentrypoint.shが上書きされるのを防ぎます
+      - ./server-data/plugins:/app/plugins
+      - ./server-data/world:/app/world
+      - ./server-data/world_nether:/app/world_nether
+      - ./server-data/world_the_end:/app/world_the_end
+      - ./server-data/logs:/app/logs
+      # server.propertiesなどの設定ファイルも必要に応じて追加できます
+      # - ./server-data/server.properties:/app/server.properties
+      # - ./server-data/ops.json:/app/ops.json
+
+    stdin_open: true
+    tty: true
